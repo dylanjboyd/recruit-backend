@@ -9,7 +9,7 @@ using Xunit;
 
 namespace RecruitBackend.IntegrationTests
 {
-    public class CardsControllerTests : IntegrationTest, IClassFixture<TestWebApplicationFactory>
+    public class CardsControllerTests : IntegrationTest
     {
         private readonly Card _cardIvette = new()
         {
@@ -28,10 +28,6 @@ namespace RecruitBackend.IntegrationTests
             ExpiryYear = 2025,
             CVC = 677
         };
-
-        public CardsControllerTests(TestWebApplicationFactory appFactory) : base(appFactory)
-        {
-        }
 
         [Fact]
         public async Task GetAllCards_EmptyResponse_NoCards()

@@ -107,7 +107,7 @@ namespace RecruitBackend.UnitTests
             _card.CardNumber = "4532283994032366";
 
             // When registering the card
-            var exception = Assert.Throws<InvalidOperationException>(() => _cardService.RegisterCard(_card));
+            var exception = Assert.Throws<ArgumentException>(() => _cardService.RegisterCard(_card));
 
             // Then an exception should be raised indicating the card is not in storage
             Assert.AreEqual(exception.Message, CardConstants.CardErrorNotInStorage);

@@ -11,8 +11,5 @@ namespace RecruitBackend.Repositories
 
         public DbSet<Card> Cards { get; set; }
         public DbSet<ValidCard> ValidCards { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlite("Data Source=recruit.db");
     }
 }

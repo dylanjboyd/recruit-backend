@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RecruitBackend.Models;
@@ -28,7 +29,14 @@ namespace RecruitBackend.Controllers
         [HttpPost]
         public ActionResult<Card> PostCard(Card card)
         {
-            return _cardService.RegisterCard(card);
+            try
+            {
+                return _cardService.RegisterCard(card);
+            }
+            catch (ArgumentException e)
+            {
+                return new BadRequestResult();
+            }
         }
     }
 }

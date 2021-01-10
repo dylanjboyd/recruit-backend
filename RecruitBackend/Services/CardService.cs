@@ -54,7 +54,7 @@ namespace RecruitBackend.Services
         {
             if (_validCardRepository.GetByCardNumber(card.CardNumber) == null)
             {
-                throw new InvalidOperationException(CardConstants.CardErrorNotInStorage);
+                throw new ArgumentException(CardConstants.CardErrorNotInStorage);
             }
         }
 
