@@ -10,7 +10,7 @@ namespace RecruitBackend.Repositories
 
     public class ValidCardRepository : Repository<ValidCard>, IValidCardRepository
     {
-        protected ValidCardRepository(DatabaseContext context) : base(context)
+        public ValidCardRepository(DatabaseContext context) : base(context)
         {
         }
 

@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using RecruitBackend.Repositories;
+using RecruitBackend.Services;
 
 namespace RecruitBackend
 {
@@ -21,6 +22,9 @@ namespace RecruitBackend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DatabaseContext>();
+            services.AddScoped<ICardRepository, CardRepository>();
+            services.AddScoped<IValidCardRepository, ValidCardRepository>();
+            services.AddScoped<ICardService, CardService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

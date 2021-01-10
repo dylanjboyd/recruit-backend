@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using RecruitBackend.Models;
@@ -14,6 +15,8 @@ namespace RecruitBackend.Services
         /// <param name="cardForCreation">The valid card to be created.</param>
         /// <returns>The created card along with any further populated fields.</returns>
         public Card RegisterCard(Card cardForCreation);
+
+        IEnumerable<Card> GetAllCards();
     }
 
     public class CardService : ICardService
@@ -40,6 +43,11 @@ namespace RecruitBackend.Services
             _cardRepository.Insert(cardForCreation);
 
             return cardForCreation;
+        }
+
+        public IEnumerable<Card> GetAllCards()
+        {
+            return _cardRepository.GetAll();
         }
 
         private void ValidateCardInStorageOrThrow(Card card)
