@@ -39,24 +39,12 @@ namespace RecruitBackend.UnitTests
             Assert.NotNull(createdCard);
         }
 
-        [Test]
-        public void RegisterCard_ThrowsException_CardNumberContainsLetters()
+        [TestCase("A336557201063420")]
+        [TestCase("@33655720106342_")]
+        public void RegisterCard_ThrowsException_CardNumberContainsInvalidCharacters(string cardNumber)
         {
-            // Given card with letter in card number
-            _card.CardNumber = "A336557201063420";
-            
-            // When registering the card
-            var exception = Assert.Throws<ArgumentException>(() => _cardService.RegisterCard(_card));
-            
-            // Then an exception should be raised about the invalid card number
-            Assert.AreEqual(exception.Message, CardConstants.CardErrorOnlyNumbers);
-        }
-
-        [Test]
-        public void RegisterCard_ThrowsException_CardNumberContainsSymbols()
-        {
-            // Given card with symbols in card number
-            _card.CardNumber = "@33655720106342_";
+            // Given card with invalid character(s) in card number
+            _card.CardNumber = cardNumber;
             
             // When registering the card
             var exception = Assert.Throws<ArgumentException>(() => _cardService.RegisterCard(_card));
