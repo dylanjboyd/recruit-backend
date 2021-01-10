@@ -51,5 +51,18 @@ namespace RecruitBackend.UnitTests
             // Then an exception should be raised about the invalid card number
             Assert.AreEqual(exception.Message, CardConstants.CardErrorOnlyNumbers);
         }
+
+        [Test]
+        public void RegisterCard_ThrowsException_CardNumberContainsSymbols()
+        {
+            // Given card with symbols in card number
+            _card.CardNumber = "@33655720106342_";
+            
+            // When registering the card
+            var exception = Assert.Throws<ArgumentException>(() => _cardService.RegisterCard(_card));
+            
+            // Then an exception should be raised about the invalid card number
+            Assert.AreEqual(exception.Message, CardConstants.CardErrorOnlyNumbers);
+        }
     }
 }
