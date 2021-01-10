@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -18,9 +19,8 @@ namespace RecruitBackend.IntegrationTests
             var response = await TestClient.GetAsync("cards");
 
             // Assert
-            // response.StatusCode.Should().Be(HttpStatusCode.OK);
-            var content = await response.Content.ReadAsAsync<List<Card>>();
-            content.Should().BeEmpty();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            (await response.Content.ReadAsAsync<List<Card>>()).Should().BeEmpty();
         }
     }
 }
