@@ -23,18 +23,29 @@ namespace RecruitBackend.Services
         {
             _logger = logger;
         }
+
         public Card RegisterCard(Card cardForCreation)
+        {
+            ValidateCardNumberOrThrow(cardForCreation);
+            ValidateCardExpiryOrThrow(cardForCreation);
+
+            return cardForCreation;
+        }
+
+        private static void ValidateCardExpiryOrThrow(Card cardForCreation)
+        {
+            if (cardForCreation.ExpiryMonth > 12)
+            {
+                throw new ArgumentException(CardConstants.CardErrorInvalidExpiry);
+            }
+        }
+
+        private static void ValidateCardNumberOrThrow(Card cardForCreation)
         {
             if (Regex.IsMatch(cardForCreation.CardNumber, @"[a-zA-Z\W_]"))
             {
                 throw new ArgumentException(CardConstants.CardErrorOnlyNumbers);
             }
-
-            if (cardForCreation.ExpiryMonth > 12)
-            {
-                throw new ArgumentException(CardConstants.CardErrorInvalidExpiry);
-            }
-            return cardForCreation;
         }
     }
 }
