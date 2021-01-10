@@ -20,6 +20,14 @@ namespace RecruitBackend.Controllers
             _cardService = cardService;
         }
 
+        [HttpGet("{cardNumber}")]
+        public ActionResult<Card> GetByCardNumber(string cardNumber)
+        {
+            var card = _cardService.GetByCardNumber(cardNumber);
+            if (card == null) return new NotFoundResult();
+            return card;
+        }
+
         [HttpGet]
         public IEnumerable<Card> Get()
         {

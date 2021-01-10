@@ -17,6 +17,7 @@ namespace RecruitBackend.Services
         public Card RegisterCard(Card cardForCreation);
 
         IEnumerable<Card> GetAllCards();
+        Card GetByCardNumber(string cardNumber);
     }
 
     public class CardService : ICardService
@@ -48,6 +49,11 @@ namespace RecruitBackend.Services
         public IEnumerable<Card> GetAllCards()
         {
             return _cardRepository.GetAll();
+        }
+
+        public Card GetByCardNumber(string cardNumber)
+        {
+            return _cardRepository.GetByCardNumber(cardNumber);
         }
 
         private void ValidateCardInStorageOrThrow(Card card)
