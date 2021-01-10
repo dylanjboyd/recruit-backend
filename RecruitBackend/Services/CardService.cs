@@ -28,8 +28,17 @@ namespace RecruitBackend.Services
         {
             ValidateCardNumberOrThrow(cardForCreation);
             ValidateCardExpiryOrThrow(cardForCreation);
+            ValidateCardNameOrThrow(cardForCreation);
 
             return cardForCreation;
+        }
+
+        private static void ValidateCardNameOrThrow(Card cardForCreation)
+        {
+            if (string.IsNullOrWhiteSpace(cardForCreation.Name))
+            {
+                throw new ArgumentException(CardConstants.CardErrorInvalidName);
+            }
         }
 
         private static void ValidateCardExpiryOrThrow(Card cardForCreation)
