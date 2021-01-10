@@ -53,5 +53,19 @@ namespace RecruitBackend.UnitTests
             // Then an exception should be raised about the invalid card number
             Assert.AreEqual(exception.Message, CardConstants.CardErrorOnlyNumbers);
         }
+
+        [TestCase(13, 2021, Description = "Month too large")]
+        public void RegisterCard_ThrowsException_ExpiryDateInvalid(int expiryMonth, int expiryYear)
+        {
+            // Given card with invalid expiry month and/or year
+            _card.ExpiryMonth = expiryMonth;
+            _card.ExpiryYear = expiryYear;
+            
+            // When registering the card
+            var exception = Assert.Throws<ArgumentException>(() => _cardService.RegisterCard(_card));
+            
+            // Then an exception should be raised about the invalid expiry
+            Assert.AreEqual(exception.Message, CardConstants.CardErrorInvalidExpiry);
+        }
     }
 }
