@@ -24,5 +24,11 @@ namespace RecruitBackend.Controllers
         {
             return _cardService.GetAllCards();
         }
+
+        [HttpPost]
+        public ActionResult<Card> PostCard(Card card)
+        {
+            return _cardService.RegisterCard(card);
+        }
     }
 }
