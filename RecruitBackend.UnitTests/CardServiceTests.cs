@@ -57,6 +57,7 @@ namespace RecruitBackend.UnitTests
         [TestCase(13, 2021, Description = "Month too large")]
         [TestCase(0, 2021, Description = "Month too small")]
         [TestCase(1, 10000, Description = "Year too large")]
+        [TestCase(1, 0, Description = "Year too small")]
         public void RegisterCard_ThrowsException_ExpiryDateInvalid(int expiryMonth, int expiryYear)
         {
             // Given card with invalid expiry month and/or year
