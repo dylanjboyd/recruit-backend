@@ -52,8 +52,6 @@ namespace RecruitBackend.Repositories
 
         public void Delete(Guid id)
         {
-            if (id == null) throw new ArgumentNullException(nameof(id));
-
             var entity = _entities.SingleOrDefault(s => s.Id == id);
             _entities.Remove(entity ?? throw new InvalidOperationException("Retrieved value to delete was null."));
             Context.SaveChanges();

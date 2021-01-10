@@ -1,37 +1,25 @@
 using System.Net.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using RecruitBackend.Repositories;
 
 namespace RecruitBackend.IntegrationTests
 {
-    public class IntegrationTest
+    public class IntegrationTest : TestWebApplicationFactory
     {
+        private readonly WebApplicationFactory<Startup> _appFactory;
         protected readonly HttpClient TestClient;
 
-        protected IntegrationTest()
+        protected IntegrationTest(WebApplicationFactory<Startup> appFactory)
         {
-            var appFactory = new WebApplicationFactory<Startup>()
-                .WithWebHostBuilder(builder =>
-                {
-                    builder.ConfigureServices(services =>
-                    {
-                        services.RemoveAll(typeof(DatabaseContext));
-                        services.AddDbContext<DatabaseContext>(
-                            options => { options.UseInMemoryDatabase("TestDb"); });
+            _appFactory = appFactory;
+            TestClient = _appFactory.CreateClient();
+        }
 
-                        var serviceProvider = services.BuildServiceProvider();
-
-                        using var scope = serviceProvider.CreateScope();
-                        var scopedServices = scope.ServiceProvider;
-                        var db = scopedServices.GetRequiredService<DatabaseContext>();
-                        db.Database.EnsureCreated();
-                    });
-                });
-
-            TestClient = appFactory.CreateClient();
+        private protected DatabaseContext GetDatabaseContext()
+        {
+            var scopeFactory = _appFactory.Services.GetRequiredService<IServiceScopeFactory>();
+            return scopeFactory.CreateScope().ServiceProvider.GetRequiredService<DatabaseContext>();
         }
     }
 }
