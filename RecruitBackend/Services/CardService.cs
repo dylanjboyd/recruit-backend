@@ -35,7 +35,7 @@ namespace RecruitBackend.Services
         private static void ValidateCardExpiryOrThrow(Card cardForCreation)
         {
             if (cardForCreation.ExpiryMonth > 12 || cardForCreation.ExpiryMonth < 1 ||
-                cardForCreation.ExpiryYear > DateTime.MaxValue.Year)
+                cardForCreation.ExpiryYear > DateTime.MaxValue.Year || cardForCreation.ExpiryYear < DateTime.MinValue.Year)
             {
                 throw new ArgumentException(CardConstants.CardErrorInvalidExpiry);
             }
