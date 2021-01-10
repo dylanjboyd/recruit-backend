@@ -35,7 +35,8 @@ namespace RecruitBackend.Services
 
         private static void ValidateCardNameOrThrow(Card cardForCreation)
         {
-            if (string.IsNullOrWhiteSpace(cardForCreation.Name) || Regex.IsMatch(cardForCreation.Name, @"[^\w\s]"))
+            if (string.IsNullOrWhiteSpace(cardForCreation.Name) || Regex.IsMatch(cardForCreation.Name, @"[^\w\s]") ||
+                cardForCreation.Name.Length > 50)
             {
                 throw new ArgumentException(CardConstants.CardErrorInvalidName);
             }
