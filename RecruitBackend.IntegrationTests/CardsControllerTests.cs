@@ -96,5 +96,23 @@ namespace RecruitBackend.IntegrationTests
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
             GetDatabaseContext().Cards.Should().BeEmpty();
         }
+
+        [Fact]
+        public async Task GetCard_OK_CardExists()
+        {
+            // Arrange
+            await using (var context = GetDatabaseContext())
+            {
+                await context.Cards.AddAsync(_cardIvette);
+                await context.SaveChangesAsync();
+            }
+
+            // Act
+            var response = await TestClient.GetAsync($"cards/{_cardIvette.CardNumber}");
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            (await response.Content.ReadAsAsync<Card>()).Should().BeEquivalentTo(_cardIvette);
+        }
     }
 }
