@@ -3,20 +3,22 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using RecruitBackend.Models;
+using RecruitBackend.Repositories;
 using RecruitBackend.Services;
 
 namespace RecruitBackend.UnitTests
 {
     public class CardServiceTests
     {
-        private CardService _cardService;
         private Card _card;
+        private CardService _cardService;
+        private Mock<ICardRepository> _mockCardRepository;
+        private Mock<IValidCardRepository> _mockValidCardRepository;
 
         [SetUp]
         public void Setup()
         {
-            var logger = new Mock<ILogger<CardService>>();
-            _cardService = new CardService(logger.Object);
+            var mockLogger = new Mock<ILogger<CardService>>();
             _card = new Card
             {
                 Name = "LOUISE T WISE",
@@ -25,16 +27,28 @@ namespace RecruitBackend.UnitTests
                 ExpiryMonth = 6,
                 ExpiryYear = 2025
             };
+            _mockCardRepository = new Mock<ICardRepository>();
+            _mockValidCardRepository = new Mock<IValidCardRepository>();
+
+            _mockValidCardRepository.Setup(r => r.GetByCardNumber(_card.CardNumber))
+                .Returns(new ValidCard
+                {
+                    Id = Guid.NewGuid(),
+                    CardNumber = _card.CardNumber
+                });
+
+            _cardService = new CardService(mockLogger.Object, _mockCardRepository.Object,
+                _mockValidCardRepository.Object);
         }
 
         [Test]
         public void RegisterCard_ShouldWork_DetailsValid()
         {
             // Given valid card
-            
+
             // When registering the card
             var createdCard = _cardService.RegisterCard(_card);
-            
+
             // Then the card should be created with no issues
             Assert.NotNull(createdCard);
         }
@@ -46,10 +60,10 @@ namespace RecruitBackend.UnitTests
         {
             // Given card with invalid character(s) in card number
             _card.CardNumber = cardNumber;
-            
+
             // When registering the card
             var exception = Assert.Throws<ArgumentException>(() => _cardService.RegisterCard(_card));
-            
+
             // Then an exception should be raised about the invalid card number
             Assert.AreEqual(exception.Message, CardConstants.CardErrorOnlyNumbers);
         }
@@ -63,10 +77,10 @@ namespace RecruitBackend.UnitTests
             // Given card with invalid expiry month and/or year
             _card.ExpiryMonth = expiryMonth;
             _card.ExpiryYear = expiryYear;
-            
+
             // When registering the card
             var exception = Assert.Throws<ArgumentException>(() => _cardService.RegisterCard(_card));
-            
+
             // Then an exception should be raised about the invalid expiry
             Assert.AreEqual(exception.Message, CardConstants.CardErrorInvalidExpiry);
         }
@@ -78,12 +92,25 @@ namespace RecruitBackend.UnitTests
         {
             // Given card with invalid name
             _card.Name = cardName;
-            
+
             // When registering the card
             var exception = Assert.Throws<ArgumentException>(() => _cardService.RegisterCard(_card));
-            
+
             // Then an exception should be raised about the invalid name
             Assert.AreEqual(exception.Message, CardConstants.CardErrorInvalidName);
+        }
+
+        [Test]
+        public void RegisterCard_ThrowsException_CardNotInStorage()
+        {
+            // Given a card not found in storage
+            _card.CardNumber = "4532283994032366";
+
+            // When registering the card
+            var exception = Assert.Throws<InvalidOperationException>(() => _cardService.RegisterCard(_card));
+
+            // Then an exception should be raised indicating the card is not in storage
+            Assert.AreEqual(exception.Message, CardConstants.CardErrorNotInStorage);
         }
     }
 }
