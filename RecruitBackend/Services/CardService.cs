@@ -29,6 +29,11 @@ namespace RecruitBackend.Services
             {
                 throw new ArgumentException(CardConstants.CardErrorOnlyNumbers);
             }
+
+            if (cardForCreation.ExpiryMonth > 12)
+            {
+                throw new ArgumentException(CardConstants.CardErrorInvalidExpiry);
+            }
             return cardForCreation;
         }
     }
