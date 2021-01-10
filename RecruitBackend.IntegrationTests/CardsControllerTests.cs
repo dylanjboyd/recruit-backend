@@ -36,8 +36,6 @@ namespace RecruitBackend.IntegrationTests
         [Fact]
         public async Task GetAllCards_EmptyResponse_NoCards()
         {
-            // Arrange
-
             // Act
             var response = await TestClient.GetAsync("cards");
 
@@ -70,7 +68,7 @@ namespace RecruitBackend.IntegrationTests
         }
 
         [Fact]
-        public async Task RegisterCard_Success_CardDetailsValid()
+        public async Task RegisterCard_OK_CardDetailsValid()
         {
             // Arrange
             await using (var context = GetDatabaseContext())
@@ -90,6 +88,17 @@ namespace RecruitBackend.IntegrationTests
             var cards = GetDatabaseContext().Cards;
             cards.Should().HaveCount(1);
             cards.First().Should().BeEquivalentTo(_cardIvette);
+        }
+
+        [Fact]
+        public async Task RegisterCard_OK_NotInValidCards()
+        {
+            // Act
+            var response = await TestClient.PostAsJsonAsync("cards", _cardIvette);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            GetDatabaseContext().Cards.Should().BeEmpty();
         }
     }
 }
