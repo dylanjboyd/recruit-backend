@@ -2,6 +2,7 @@ using System;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using RecruitBackend.Models;
+using RecruitBackend.Repositories;
 
 namespace RecruitBackend.Services
 {
@@ -17,11 +18,16 @@ namespace RecruitBackend.Services
 
     public class CardService : ICardService
     {
+        private readonly ICardRepository _cardRepository;
         private readonly ILogger<CardService> _logger;
+        private readonly IValidCardRepository _validCardRepository;
 
-        public CardService(ILogger<CardService> logger)
+        public CardService(ILogger<CardService> logger, ICardRepository cardRepository,
+            IValidCardRepository validCardRepository)
         {
             _logger = logger;
+            _cardRepository = cardRepository;
+            _validCardRepository = validCardRepository;
         }
 
         public Card RegisterCard(Card cardForCreation)
@@ -29,31 +35,42 @@ namespace RecruitBackend.Services
             ValidateCardNumberOrThrow(cardForCreation);
             ValidateCardExpiryOrThrow(cardForCreation);
             ValidateCardNameOrThrow(cardForCreation);
+            ValidateCardInStorageOrThrow(cardForCreation);
+
+            _cardRepository.Insert(cardForCreation);
 
             return cardForCreation;
         }
 
-        private static void ValidateCardNameOrThrow(Card cardForCreation)
+        private void ValidateCardInStorageOrThrow(Card card)
         {
-            if (string.IsNullOrWhiteSpace(cardForCreation.Name) || Regex.IsMatch(cardForCreation.Name, @"[^\w\s]") ||
-                cardForCreation.Name.Length > 50)
+            if (_validCardRepository.GetByCardNumber(card.CardNumber) == null)
+            {
+                throw new InvalidOperationException(CardConstants.CardErrorNotInStorage);
+            }
+        }
+
+        private static void ValidateCardNameOrThrow(Card card)
+        {
+            if (string.IsNullOrWhiteSpace(card.Name) || Regex.IsMatch(card.Name, @"[^\w\s]") ||
+                card.Name.Length > 50)
             {
                 throw new ArgumentException(CardConstants.CardErrorInvalidName);
             }
         }
 
-        private static void ValidateCardExpiryOrThrow(Card cardForCreation)
+        private static void ValidateCardExpiryOrThrow(Card card)
         {
-            if (cardForCreation.ExpiryMonth > 12 || cardForCreation.ExpiryMonth < 1 ||
-                cardForCreation.ExpiryYear > DateTime.MaxValue.Year || cardForCreation.ExpiryYear < DateTime.MinValue.Year)
+            if (card.ExpiryMonth > 12 || card.ExpiryMonth < 1 ||
+                card.ExpiryYear > DateTime.MaxValue.Year || card.ExpiryYear < DateTime.MinValue.Year)
             {
                 throw new ArgumentException(CardConstants.CardErrorInvalidExpiry);
             }
         }
 
-        private static void ValidateCardNumberOrThrow(Card cardForCreation)
+        private static void ValidateCardNumberOrThrow(Card card)
         {
-            if (Regex.IsMatch(cardForCreation.CardNumber, @"[a-zA-Z\W_]"))
+            if (Regex.IsMatch(card.CardNumber, @"[a-zA-Z\W_]"))
             {
                 throw new ArgumentException(CardConstants.CardErrorOnlyNumbers);
             }
