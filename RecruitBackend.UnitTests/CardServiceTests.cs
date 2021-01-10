@@ -39,8 +39,9 @@ namespace RecruitBackend.UnitTests
             Assert.NotNull(createdCard);
         }
 
-        [TestCase("A336557201063420")]
-        [TestCase("@33655720106342_")]
+        [TestCase("A336557201063420", Description = "Letters")]
+        [TestCase("@33655720106342_", Description = "Symbols")]
+        [TestCase(" 336557201063420", Description = "Whitespace")]
         public void RegisterCard_ThrowsException_CardNumberContainsInvalidCharacters(string cardNumber)
         {
             // Given card with invalid character(s) in card number
