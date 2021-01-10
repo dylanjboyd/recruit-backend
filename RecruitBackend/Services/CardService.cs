@@ -25,7 +25,7 @@ namespace RecruitBackend.Services
         }
         public Card RegisterCard(Card cardForCreation)
         {
-            if (Regex.IsMatch(cardForCreation.CardNumber, @"[a-zA-Z]"))
+            if (Regex.IsMatch(cardForCreation.CardNumber, @"[a-zA-Z\W_]"))
             {
                 throw new ArgumentException(CardConstants.CardErrorOnlyNumbers);
             }
