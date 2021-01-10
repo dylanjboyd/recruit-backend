@@ -38,3 +38,5 @@ msbuild.wrn
 
 # SQLite DBs
 *.db
+*.db-shm
+*.db-wal

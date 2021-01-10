@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitBackend", "RecruitBa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitBackend.UnitTests", "RecruitBackend.UnitTests\RecruitBackend.UnitTests.csproj", "{109C9F56-D6BE-45C9-950F-F73FE7025927}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitBackend.IntegrationTests", "RecruitBackend.IntegrationTests\RecruitBackend.IntegrationTests.csproj", "{B98B9EE4-73D1-4743-A8AA-C42E92C5A097}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{109C9F56-D6BE-45C9-950F-F73FE7025927}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{109C9F56-D6BE-45C9-950F-F73FE7025927}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{109C9F56-D6BE-45C9-950F-F73FE7025927}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B98B9EE4-73D1-4743-A8AA-C42E92C5A097}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B98B9EE4-73D1-4743-A8AA-C42E92C5A097}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B98B9EE4-73D1-4743-A8AA-C42E92C5A097}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B98B9EE4-73D1-4743-A8AA-C42E92C5A097}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
