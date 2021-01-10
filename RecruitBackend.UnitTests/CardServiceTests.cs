@@ -49,7 +49,7 @@ namespace RecruitBackend.UnitTests
             var exception = Assert.Throws<ArgumentException>(() => _cardService.RegisterCard(_card));
             
             // Then an exception should be raised about the invalid card number
-            Assert.Equals(exception.Message, "CardNumber should only contain numbers.");
+            Assert.AreEqual(exception.Message, "CardNumber should only contain numbers.");
         }
     }
 }

@@ -1,3 +1,5 @@
+using System;
+using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using RecruitBackend.Models;
 
@@ -23,6 +25,10 @@ namespace RecruitBackend.Services
         }
         public Card RegisterCard(Card cardForCreation)
         {
+            if (Regex.IsMatch(cardForCreation.CardNumber, @"[a-zA-Z]"))
+            {
+                throw new ArgumentException("CardNumber should only contain numbers.");
+            }
             return cardForCreation;
         }
     }
