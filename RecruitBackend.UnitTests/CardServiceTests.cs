@@ -72,6 +72,7 @@ namespace RecruitBackend.UnitTests
         }
 
         [TestCase(" ", Description = "Whitespace only")]
+        [TestCase("LOUIS# T WISE", Description = "Contains symbols")]
         public void RegisterCard_ThrowsException_NameInvalid(string cardName)
         {
             // Given card with invalid name
