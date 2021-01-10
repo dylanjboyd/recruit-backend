@@ -70,5 +70,18 @@ namespace RecruitBackend.UnitTests
             // Then an exception should be raised about the invalid expiry
             Assert.AreEqual(exception.Message, CardConstants.CardErrorInvalidExpiry);
         }
+
+        [TestCase(" ", Description = "Whitespace only")]
+        public void RegisterCard_ThrowsException_NameInvalid(string cardName)
+        {
+            // Given card with invalid name
+            _card.Name = cardName;
+            
+            // When registering the card
+            var exception = Assert.Throws<ArgumentException>(() => _cardService.RegisterCard(_card));
+            
+            // Then an exception should be raised about the invalid name
+            Assert.AreEqual(exception.Message, CardConstants.CardErrorInvalidName);
+        }
     }
 }
