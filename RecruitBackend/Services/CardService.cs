@@ -27,7 +27,7 @@ namespace RecruitBackend.Services
         {
             if (Regex.IsMatch(cardForCreation.CardNumber, @"[a-zA-Z]"))
             {
-                throw new ArgumentException("CardNumber should only contain numbers.");
+                throw new ArgumentException(CardConstants.CardErrorOnlyNumbers);
             }
             return cardForCreation;
         }
