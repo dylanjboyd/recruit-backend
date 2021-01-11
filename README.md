@@ -1,5 +1,7 @@
 # Backend
 
+![Backend screenshot](./screenshot-backend.png)
+
 This Recruit back-end site has been implemented using:
 
 - .NET 5.0
