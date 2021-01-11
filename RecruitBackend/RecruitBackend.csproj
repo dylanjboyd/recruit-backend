@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <DocumentationFile>bin\Debug\net5.0\RecruitBackend.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>

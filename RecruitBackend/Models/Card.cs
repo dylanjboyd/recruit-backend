@@ -27,7 +27,7 @@ namespace RecruitBackend.Models
 
         /// <summary>
         /// Also known as a card security code, this is a security feature to prevent credit card fraud.
-        /// See <seealso cref="https://en.wikipedia.org/wiki/Card_security_code">this article</seealso> for more.
+        /// Look up <seealso cref="https://en.wikipedia.org/wiki/Card_security_code">CVC articles</seealso> for more.
         /// </summary>
         public int CVC { get; set; }
     }
