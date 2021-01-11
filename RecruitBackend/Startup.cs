@@ -25,6 +25,14 @@ namespace RecruitBackend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin();
+                    builder.AllowAnyHeader();
+                });
+            });
             services.AddDbContext<DatabaseContext>(options => { options.UseSqlite("Data Source=recruit.db"); });
             services.AddScoped<ICardRepository, CardRepository>();
             services.AddScoped<IValidCardRepository, ValidCardRepository>();
@@ -63,6 +71,7 @@ namespace RecruitBackend
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors();
 
             app.UseAuthorization();
 
