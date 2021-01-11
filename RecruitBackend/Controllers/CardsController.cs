@@ -60,9 +60,9 @@ namespace RecruitBackend.Controllers
             {
                 return _cardService.RegisterCard(card);
             }
-            catch (ArgumentException)
+            catch (ArgumentException e)
             {
-                return new BadRequestResult();
+                return new BadRequestObjectResult(e.Message);
             }
         }
     }
