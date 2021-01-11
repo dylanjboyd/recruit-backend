@@ -114,5 +114,22 @@ namespace RecruitBackend.IntegrationTests
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             (await response.Content.ReadAsAsync<Card>()).Should().BeEquivalentTo(_cardIvette);
         }
+
+        [Fact]
+        public async Task GetCard_NotFound_NoCardExists()
+        {
+            // Arrange
+            await using (var context = GetDatabaseContext())
+            {
+                await context.Cards.AddAsync(_cardIvette);
+                await context.SaveChangesAsync();
+            }
+
+            // Act
+            var response = await TestClient.GetAsync($"cards/{_cardLloyd}");
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
     }
 }
