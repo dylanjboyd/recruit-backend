@@ -19,7 +19,7 @@ solution as you would any other. This was developed using JetBrains Rider 2020.3
 not face any problems loading it on Windows or Linux (...or something else?)
 
 The `RecruitBackend` project (the web application) itself is configured to run as a console application, so you should
-be able to run it directly without external depdendencies such as IIS. The SQLite database should be created for you
+be able to run it directly without external dependencies such as IIS. The SQLite database should be created for you
 automatically.
 
 The front-end is configured with the `localhost` address of this project out of the box, so you should not face any
@@ -28,12 +28,13 @@ issues in registering credit cards given that a `ValidCard` corresponds with the
 ### Adding ValidCards
 
 No API call exists to add ValidCards for security reasons, since the preferred method of adding valid cards from a
-business perspective is not known. To do so, make use of a database browser such as [DB Browser for SQLite] to manually
-open the database (`RecruitBackend/recruit.db`).
+business perspective is not known. To do so, make use of a database browser such
+as [DB Browser for SQLite](https://sqlitebrowser.org)
+to manually open the database (`RecruitBackend/recruit.db`).
 
 For each valid card you wish to add, generate a GUID either using
 [Visual Studio](https://social.technet.microsoft.com/wiki/contents/articles/33047.create-guid-tool-in-visual-studio.aspx)
-or using an online tool such as [GUID Generator](https://guidgenerator.com). With that GUID in the Id column, add your
+or using an online tool such as [GUID Generator](https://guidgenerator.com). With that GUID in the `Id` column, add your
 desired card number next to it, and ensure you save your changes however the tool mandates.
 
 You should now be able to register cards with those card numbers using the front-end.
@@ -41,4 +42,4 @@ You should now be able to register cards with those card numbers using the front
 ## Testing
 
 Unit tests should be discovered and run without any additional setup. Integration tests are recognised as unit tests and
-should work no differently.
+should work identically.
