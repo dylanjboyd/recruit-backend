@@ -1,39 +1,42 @@
 # Backend
-Create an API to receive the data captured in the frontend.
 
-We recommend using C#, .Net Core, and WebAPI to build this API.
+This Recruit back-end site has been implemented using:
 
-## Specification
-- Inputs:
-    - Name (any alphanumeric character - maximum 50)
-    - Credit card needs to be numeric and be in the valid credit cards storage
-    - CVC is any number
-    - Expiry date is any valid date
-- One operation to store the input data
-    - Validate the information received from the frontend
-- One operation to query all data that has been stored
-- One operation to query one of the input data stored
-- Storage (optional)
-    - Create the storage for the valid credit card
-    - Create the storage for the input fields
-- Use REST standards
+- .NET 5.0
+- EF Core in the data layer, using:
+  - SQLite for storage in the application itself
+  - In-memory SQLite for integration tests
+- NUnit and Moq for unit tests
+- XUnit and FluentAssertions for integration tests (since greater tutorial content was available to follow)
+- Swashbuckle and Swagger (as bundled with .NET Core projects) for interactive API documentation
 
-## Commits
-Please commit frequently to communicate your throughts while working on this assignment
+## Setup
 
-## What is valued
-- Clean code
-- Design patterns
-- Unit tests
-- Integration tests
-- Performance
-- Security
-- Dependency injection
-- Http verbs, and resources naming
-- API documentation for consumers
+Using a version of your preferred IDE recent enough to support .NET 5.0, as well as the .NET 5.0 SDK itself, load the
+solution as you would any other. This was developed using JetBrains Rider 2020.3 on macOS 11.1 (Intel), but you should
+not face any problems loading it on Windows or Linux (...or something else?)
 
-## Duration
-Use about 2 hours on this assignment. You are expected to complete most of what is defined in the specification section also considering the things we value.
+The `RecruitBackend` project (the web application) itself is configured to run as a console application, so you should
+be able to run it directly without external depdendencies such as IIS. The SQLite database should be created for you
+automatically.
 
-## Tech
-- API following the REST standards
+The front-end is configured with the `localhost` address of this project out of the box, so you should not face any
+issues in registering credit cards given that a `ValidCard` corresponds with the `Card` you're registering.
+
+### Adding ValidCards
+
+No API call exists to add ValidCards for security reasons, since the preferred method of adding valid cards from a
+business perspective is not known. To do so, make use of a database browser such as [DB Browser for SQLite] to manually
+open the database (`RecruitBackend/recruit.db`).
+
+For each valid card you wish to add, generate a GUID either using
+[Visual Studio](https://social.technet.microsoft.com/wiki/contents/articles/33047.create-guid-tool-in-visual-studio.aspx)
+or using an online tool such as [GUID Generator](https://guidgenerator.com). With that GUID in the Id column, add your
+desired card number next to it, and ensure you save your changes however the tool mandates.
+
+You should now be able to register cards with those card numbers using the front-end.
+
+## Testing
+
+Unit tests should be discovered and run without any additional setup. Integration tests are recognised as unit tests and
+should work no differently.
